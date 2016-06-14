@@ -957,17 +957,17 @@ int sort_routine_test(char* input_file, char* output_file,
   if (compress_level > 0) {
     sprintf(strchr(modeout, '\0'), "%d", compress_level < 9 ? compress_level : 9);
   }
-  samFile *sf_out = sam_open_format(output_file, modeout, NULL);
-  if (sf_out == NULL) {
-    fprintf(stderr, "ERROR in open file %s\n", output_file);
-    return 1;
-  }
+  //samFile *sf_out = sam_open_format(output_file, modeout, NULL);
+  //if (sf_out == NULL) {
+  //  fprintf(stderr, "ERROR in open file %s\n", output_file);
+  //  return 1;
+  //}
   int ret;
-  ret = sam_hdr_write(sf_out, header);
-  if (ret < 0) {
-    fprintf(stderr, "ERROR in write header for file %s\n", output_file);
-    return 1;
-  }
+  //ret = sam_hdr_write(sf_out, header);
+  //if (ret < 0) {
+  //  fprintf(stderr, "ERROR in write header for file %s\n", output_file);
+  //  return 1;
+  //}
 
   //if (nof_thread > 1) hts_set_threads(sf_out, nof_thread);
 
@@ -1004,8 +1004,7 @@ int sort_routine_test(char* input_file, char* output_file,
 
     // Test parallel writes 
     int buffer_size = i;
-    //nof_files = write_blocks(nof_files, buffer_size, buffer, header, nof_threads, tmp_prefix,
-    nof_files = write_blocks(nof_files, buffer_size, buffer, header, 8, tmp_prefix,
+    nof_files = write_blocks(nof_files, buffer_size, buffer, header, nof_threads, tmp_prefix,
         compress_level);
 
     // TODO(mhhuang) can Test randome reads 
@@ -1020,7 +1019,7 @@ int sort_routine_test(char* input_file, char* output_file,
       }
       //return 0;
 
-      if (bam_merge_core2(0, sf_out, modeout, NULL, nof_files, fns,
+      if (bam_merge_core2(0, output_file, modeout, NULL, nof_files, fns,
             MERGE_COMBINE_RG|MERGE_COMBINE_PG, NULL, nof_threads,
             NULL, NULL) < 0) {
         // Propagate bam_merge_core2() failure; it has already emitted a
@@ -1037,7 +1036,7 @@ int sort_routine_test(char* input_file, char* output_file,
     // reset
     i = 0;
     gettimeofday(&t_start, NULL);
-    break;
+    //break;
   }
   if (ret != -1) {
     fprintf(stderr, "Error: truncated file. Aborting...\n");
@@ -1051,7 +1050,7 @@ err:
   free(buffer);
   bam_hdr_destroy(header);
   sam_close(sf);
-  sam_close(sf_out);
+  //sam_close(sf_out);
   return 0;
 }
 

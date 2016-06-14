@@ -1,0 +1,11 @@
+bgzip
+htsfile
+tabix
+test/fieldarith
+test/hfile
+test/sam
+test/test-regidx
+test/test-vcf-api
+test/test-vcf-sweep
+test/test_view
+version.h
