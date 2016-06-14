@@ -42,7 +42,7 @@ void write_buffer(samFile *sf, bam1_t **buf, int size, bam_hdr_t *h) {
 
   gettimeofday(&t_end, NULL);
   fprintf(stdout,"write: time for the last %d records, %ld us\n",
-      getTimeDiffInUs(t_start, t_end), size);
+      size, getTimeDiffInUs(t_start, t_end));
   fflush(stdout);
 }
 
